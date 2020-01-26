@@ -39,7 +39,7 @@ class CircularLinkedList:
                 cur = cur.next
             cur.next = new_node
             new_node.next = self.head
-    def print_lis(self):
+    def print_list(self):
         cur = self.head
         while cur:
             print(cur.data)
@@ -86,17 +86,47 @@ class CircularLinkedList:
         while cur.next != self.head:
             cur = cur.next
         cur.next = split_cllist.head
-        self.print_lis()
+        self.print_list()
         print("--split line--\n")
-        split_cllist.print_lis()
+        split_cllist.print_list()
+    def remove_node(self, node):
+        if self.head:
+            if self.head == node:
+                if self.head == self.head.next:
+                    self.head = None
+                else:
+                    cur = self.head
+                    while cur.next != self.head:
+                        cur = cur.next
+                    cur.next = self.head.next
+                    self.head = self.head.next
+            else:
+                cur = self.head
+                prev = Node
+                while cur.next != self.head:
+                    prev = cur
+                    cur = cur.next
+                    if cur == node:
+                        prev.next = cur.next
+                        cur = cur.next
+    # Josephus Problem solution
+    def josephus_circle(self, step):
+        cur = self.head
+        while len(self) > 1:
+            count = 1
+            while count != step:
+                cur = cur.next
+                count += 1
+            self.remove_node(cur)
+            print("Kill: " + str(cur.data))
+            cur = cur.next
 
 cllist = CircularLinkedList()
-cllist.append("a")
-cllist.append("b")
-cllist.append("c")
-cllist.print_lis()
-cllist.prepend("A")
-# cllist.print_lis()
-# cllist.remove("b")
-# cllist.print_lis()
-cllist.split_list()
+cllist.append(1)
+cllist.append(2)
+cllist.append(3)
+cllist.append(4)
+
+
+cllist.josephus_circle(2)
+cllist.print_list()
