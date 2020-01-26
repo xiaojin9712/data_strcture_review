@@ -121,6 +121,16 @@ class CircularLinkedList:
             print("Kill: " + str(cur.data))
             cur = cur.next
 
+    # determine whether a given linked list is circular or not
+    def is_circular_linked_list(self, input_list):
+        cur = input_list.head
+        if cur:
+            while cur.next:
+                if cur.next == input_list.head:
+                    return True
+                cur = cur.next
+        return False
+
 cllist = CircularLinkedList()
 cllist.append(1)
 cllist.append(2)
