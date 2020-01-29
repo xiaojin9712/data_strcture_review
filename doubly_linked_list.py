@@ -112,6 +112,16 @@ class DoublyLinkedList:
                     return
             else:
                 cur = cur.next
+    def reverse(self):
+        temp = None
+        cur = self.head
+        while cur:
+            temp = cur.prev
+            cur.prev = cur.next
+            cur.next = temp
+            cur = cur.prev
+        if temp:
+            self.head = temp.prev
 
 
 dllist = DoublyLinkedList()
@@ -130,3 +140,9 @@ dllist.delete(6)
 dllist.delete(5)
 dllist.delete(3)
 dllist.print_list()
+
+# Exercise
+# 1. Solution for remove duplicates
+
+# 2. Solution for Pairs and Sums Quiz
+
