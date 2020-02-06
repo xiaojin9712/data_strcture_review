@@ -1,3 +1,6 @@
+from queue import Queue
+from stack import Stack
+
 class Node(object):
     def __init__(self, value):
         self.value = value
@@ -33,6 +36,7 @@ class BinaryTree(object):
             traversal += (str(start.value) + "-")
             traversal = self.inorder_print(start.right, traversal)
         return traversal
+
     def postorder_print(self, start, traversal):
         """ Left->Right->Root """
         if start:
@@ -40,6 +44,57 @@ class BinaryTree(object):
             traversal = self.postorder_print(start.right, traversal)
             traversal += (str(start.value) + "-")
         return traversal
+
+    def level_order_print(self, start):
+        if start is None:
+            return
+
+        queue = Queue()
+        traversal = ""
+        queue.enqueue(start)
+        while queue.size() > 0:
+            traversal += str(queue.peek()) + "-"
+            node  = queue.dequeue()
+            if node.left:
+                queue.enqueue(node.left)
+            if node.right:
+                queue.enqueue(node.right)
+        return traversal
+
+    def level_order_print_reverse(self, start):
+        if start is None:
+            return
+        queue = Queue()
+        stack = Stack()
+        traversal = ""
+        queue.enqueue(start)
+        while queue.size() > 0:
+            node  = queue.dequeue()
+            stack.push(node)
+            if node.left:
+                queue.enqueue(node.left)
+            if node.right:
+                queue.enqueue(node.right)
+        while len(stack) > 0:
+            node = stack.pop()
+            traversal += str(node.value) + "-"
+        return traversal
+
+    def height(self, node):
+        if node is None:
+            return -1
+        left_height = self.height(node.left)
+        right_height = self.height(node.right)
+
+        return 1 + max(left_height, right_height)
+
+    def size_(self, node):
+        if node is None:
+            return 0
+        left_size = self.size_(node.left)
+        right_size = self.size_(node.right)
+
+        return 1 + left_size + right_size
 
 
 tree = BinaryTree(1)
@@ -54,3 +109,6 @@ tree.print_tree("preorder")
 tree.print_tree("inorder")
 tree.print_tree("postorder")
 
+print(tree.level_order_print(tree.root))
+print(tree.level_order_print_reverse(tree.root))
+print(tree.height(tree.root))
