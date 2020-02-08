@@ -46,6 +46,7 @@ class BinaryTree(object):
         return traversal
 
     def level_order_print(self, start):
+        '''BFS'''
         if start is None:
             return
 
